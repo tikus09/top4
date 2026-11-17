@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "npm run generate-types && astro dev",
     "build": "npm run generate-types && astro build",
+    "check": "npm run generate-types && astro check && svelte-check",
     "preview": "astro preview",
     "deploy": "npm run build && wrangler deploy",
     "astro": "astro",
@@ -23,7 +24,9 @@
     "wrangler": "^4.163.0"
   },
   "devDependencies": {
-    "@types/node": "^26.6.6"
+    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.6",
+    "svelte-check": "^4.7.8"
   },
   "allowScripts": {
     "esbuild@0.28.2": true,

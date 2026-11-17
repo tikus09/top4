@@ -6,6 +6,9 @@
 	let { start = 0 }: { start?: number } = $props();
 
 	// $state makes "count" reactive: when it changes, the page updates.
+	// We copy "start" only once, on purpose: it is just the starting number.
+	// Svelte warns about this in case it is a mistake, so we tell it we meant it:
+	// svelte-ignore state_referenced_locally
 	let count = $state(start);
 </script>
 

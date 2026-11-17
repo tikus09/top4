@@ -1,0 +1,52 @@
+# Deploys the site to Cloudflare every time something lands on main
+# (in other words: every time you merge a pull request).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  # Also allows re-deploying by hand from the "Actions" tab on GitHub.
+  workflow_dispatch:
+
+# Least privilege: this workflow only needs to read the code.
+# Access to Cloudflare comes from the API token secret below.
+permissions:
+  contents: read
+
+# Never run two deploys at the same time. If you merge twice quickly,
+# the second deploy waits for the first one instead of racing it.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy to Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Same checks as on pull requests, as a last safety net before going live.
+      - name: Type check
+        run: npm run check
+
+      # "npm run deploy" = build + "wrangler deploy".
+      # Wrangler reads these two environment variables to log in to Cloudflare.
+      # The values come from GitHub's encrypted secrets, never from the code.
+      - name: Build and deploy
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

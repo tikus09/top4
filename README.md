@@ -22,6 +22,28 @@ npm run build     # build the Worker into dist/
 npm run preview   # run the built site in Cloudflare's local runtime (workerd)
 ```
 
+## First-time local setup
+
+```sh
+cp .dev.vars.example .dev.vars   # then put a random value in BETTER_AUTH_SECRET
+npm run db:migrate:local         # create the tables in your local database
+```
+
+## Accounts (Better Auth)
+
+- Email + password sign-up and log-in. Settings in `src/lib/auth-options.ts`, setup in `src/lib/auth.ts`.
+- All auth requests go to `/api/auth/*` (for example `POST /api/auth/sign-up/email`).
+- Passwords are stored hashed (scrypt), never in plain text.
+- If you change auth settings or add a Better Auth plugin:
+  `npm run auth:generate` (updates `src/db/auth-schema.ts`), then `npm run db:generate`.
+
+Secrets and settings:
+
+| Name | Local | Production |
+|---|---|---|
+| `BETTER_AUTH_SECRET` | `.dev.vars` (never committed) | Cloudflare secret: `npx wrangler secret put BETTER_AUTH_SECRET` |
+| `BETTER_AUTH_URL` | `.dev.vars` | `vars` in `wrangler.jsonc` |
+
 ## Database (Cloudflare D1 + Drizzle)
 
 - D1 database `top4-db`, available in server code as `env.DB` (see `wrangler.jsonc`)
@@ -41,7 +63,7 @@ npm run db:migrate:remote   # 3. apply it to the real database on Cloudflare
 Live site: https://top4.top4.workers.dev
 
 **Automatic:** every merge into `main` runs `.github/workflows/deploy.yml`, which type checks,
-builds and deploys. You can also re-run it by hand: GitHub → Actions → Deploy → "Run workflow".
+applies new database migrations to the real D1 database, then builds and deploys. You can also re-run it by hand: GitHub → Actions → Deploy → "Run workflow".
 
 It uses two GitHub Actions secrets (Settings → Secrets and variables → Actions):
 

@@ -42,6 +42,15 @@ jobs:
       - name: Type check
         run: npm run check
 
+      # Apply new database migrations (migrations/*.sql) to the real D1 database
+      # BEFORE deploying, so new code never runs without the tables it needs.
+      # Migrations already applied are skipped (Wrangler tracks them in D1).
+      - name: Apply database migrations
+        run: npm run db:migrate:remote
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       # "npm run deploy" = build + "wrangler deploy".
       # Wrangler reads these two environment variables to log in to Cloudflare.
       # The values come from GitHub's encrypted secrets, never from the code.

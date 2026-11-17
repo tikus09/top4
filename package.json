@@ -7,15 +7,27 @@
     "node": ">=22.23.4"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "npm run generate-types && astro dev",
+    "build": "npm run generate-types && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "deploy": "npm run build && wrangler deploy",
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.4.8",
     "@astrojs/svelte": "^9.1.6",
     "astro": "^7.4.12",
     "svelte": "^5.57.3",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.163.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261110.1": true,
+    "workerd@1.20261116.1": true
   }
 }

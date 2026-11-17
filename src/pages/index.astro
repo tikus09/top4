@@ -1,6 +1,8 @@
 ---
 // This "frontmatter" block (between the --- lines) runs on the server.
 // Variables defined here can be used in the HTML below.
+import Counter from '../components/Counter.svelte';
+
 const appName = 'Top 4';
 ---
 
@@ -16,5 +18,12 @@ const appName = 'Top 4';
 	<body>
 		<h1>Hello {appName}</h1>
 		<p>Pick your four favorite LEGO sets. Coming soon.</p>
+
+		<!--
+			A Svelte "island". client:load tells Astro to send this component's
+			JavaScript to the browser so the button works. Without it, Astro
+			would render the button as plain HTML that does nothing when clicked.
+		-->
+		<Counter client:load start={0} />
 	</body>
 </html>

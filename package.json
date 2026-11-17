@@ -14,6 +14,7 @@
     "deploy": "npm run build && wrangler deploy",
     "astro": "astro",
     "generate-types": "wrangler types",
+    "auth:generate": "auth generate --config better-auth.config.ts --adapter drizzle --dialect sqlite --output src/db/auth-schema.ts --yes",
     "db:generate": "drizzle-kit generate",
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
@@ -22,6 +23,7 @@
     "@astrojs/cloudflare": "^14.4.8",
     "@astrojs/svelte": "^9.1.6",
     "astro": "^7.4.12",
+    "better-auth": "^1.7.25",
     "drizzle-orm": "^0.45.4",
     "svelte": "^5.57.3",
     "typescript": "^6.0.3",
@@ -30,6 +32,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@types/node": "^26.6.6",
+    "auth": "1.7.25",
     "drizzle-kit": "^0.31.11",
     "svelte-check": "^4.7.8"
   },

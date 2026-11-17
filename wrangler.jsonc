@@ -2,8 +2,19 @@
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"compatibility_date": "2026-11-10",
 	"compatibility_flags": [
-		"global_fetch_strictly_public"
+		"global_fetch_strictly_public",
+		// Node.js features (such as AsyncLocalStorage) that Better Auth uses
+		"nodejs_compat"
 	],
+	// Public settings (NOT secrets). Locally, .dev.vars overrides these.
+	"vars": {
+		"BETTER_AUTH_URL": "https://top4.top4.workers.dev"
+	},
+	// Secret NAMES only. Values live in .dev.vars (local, never committed)
+	// and in Cloudflare (set with: npx wrangler secret put BETTER_AUTH_SECRET).
+	"secrets": {
+		"required": ["BETTER_AUTH_SECRET"]
+	},
 	"name": "top4",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {

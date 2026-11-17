@@ -22,6 +22,20 @@ npm run build     # build the Worker into dist/
 npm run preview   # run the built site in Cloudflare's local runtime (workerd)
 ```
 
+## Database (Cloudflare D1 + Drizzle)
+
+- D1 database `top4-db`, available in server code as `env.DB` (see `wrangler.jsonc`)
+- Tables are defined in `src/db/schema.ts`. Use `getDb()` from `src/db/index.ts` to query.
+- `GET /api/health` returns `{ ok, database, tables }` to check the Worker can reach D1.
+
+Changing tables:
+
+```sh
+npm run db:generate         # 1. create a migration (.sql) in migrations/ from schema.ts
+npm run db:migrate:local    # 2. apply it to your local database (.wrangler/)
+npm run db:migrate:remote   # 3. apply it to the real database on Cloudflare
+```
+
 ## Deploy
 
 Live site: https://top4.top4.workers.dev

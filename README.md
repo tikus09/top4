@@ -32,6 +32,8 @@ npm run db:migrate:local         # create the tables in your local database
 ## Accounts (Better Auth)
 
 - Email + password sign-up and log-in. Settings in `src/lib/auth-options.ts`, setup in `src/lib/auth.ts`.
+- Pages: `/signup` and `/login` (Svelte forms in `src/components/`). The home page shows who is logged in, with a Log out button.
+- Svelte components use the browser client in `src/lib/auth-client.ts`, never `auth.ts` (server only).
 - All auth requests go to `/api/auth/*` (for example `POST /api/auth/sign-up/email`).
 - Passwords are stored hashed (scrypt), never in plain text.
 - If you change auth settings or add a Better Auth plugin:

@@ -17,6 +17,7 @@ You need [Node.js](https://nodejs.org) installed.
 ```sh
 npm install       # install the libraries listed in package.json
 npm run dev       # start the dev server at http://localhost:4321
+npm run check     # type check .astro and .svelte files (also runs on every PR)
 npm run build     # build the Worker into dist/
 npm run preview   # run the built site in Cloudflare's local runtime (workerd)
 ```

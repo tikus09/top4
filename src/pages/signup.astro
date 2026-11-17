@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import SignUpForm from '../components/SignUpForm.svelte';
+---
+
+<Base title="Sign up">
+	<h1>Create your account</h1>
+	{/* client:load: render the form right away, then make it interactive in the browser. */}
+	<SignUpForm client:load />
+	<p>Already have an account? <a href="/login">Log in</a></p>
+</Base>

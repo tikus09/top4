@@ -1,31 +1,16 @@
 ---
-// This "frontmatter" block (between the --- lines) runs on the server.
-// Variables defined here can be used in the HTML below.
-import Counter from '../components/Counter.svelte';
-
-const appName = 'Top 4';
+import Base from '../layouts/Base.astro';
+import AccountStatus from '../components/AccountStatus.svelte';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{appName}</title>
-	</head>
-	<body>
-		<h1>Hello {appName}</h1>
-		<p>Pick your four favorite LEGO sets. Coming soon.</p>
+<Base title="Top 4">
+	<h1>Hello Top 4</h1>
+	<p>Pick your four favorite LEGO sets. Coming soon.</p>
 
-		{/*
-			A Svelte "island". client:load tells Astro to send this component's
-			JavaScript to the browser so the button works. Without it, Astro
-			would render the button as plain HTML that does nothing when clicked.
-			(This curly-brace comment style stays in the source code. An HTML
-			comment would be sent to every visitor's browser.)
-		*/}
-		<Counter client:load start={0} />
-	</body>
-</html>
+	{/*
+		client:only="svelte": render this island ONLY in the browser.
+		It asks the server "who is logged in?", which only makes sense in a real
+		visitor's browser (with their cookie), not while building the site.
+	*/}
+	<AccountStatus client:only="svelte" />
+</Base>

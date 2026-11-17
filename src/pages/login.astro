@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import LogInForm from '../components/LogInForm.svelte';
+---
+
+<Base title="Log in">
+	<h1>Log in</h1>
+	<LogInForm client:load />
+	<p>New here? <a href="/signup">Create an account</a></p>
+</Base>

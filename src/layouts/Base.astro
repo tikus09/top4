@@ -1,0 +1,102 @@
+---
+// Shared page skeleton: every page wraps its content in <Base title="...">.
+// Whatever the page puts inside <Base> ... </Base> appears where <slot /> is.
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+const siteName = 'Top 4';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title === siteName ? siteName : `${title} · ${siteName}`}</title>
+	</head>
+	<body>
+		<header>
+			<a href="/" class="site-name">{siteName}</a>
+			<nav>
+				<a href="/login">Log in</a>
+				<a href="/signup">Sign up</a>
+			</nav>
+		</header>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	/* is:global = these styles apply to the whole page, including Svelte components. */
+	:root {
+		font-family: system-ui, sans-serif;
+		line-height: 1.5;
+		color-scheme: light dark;
+	}
+	body {
+		margin: 0;
+	}
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 1rem;
+		border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+	}
+	header nav {
+		display: flex;
+		gap: 1rem;
+	}
+	.site-name {
+		font-weight: 700;
+		text-decoration: none;
+		color: inherit;
+	}
+	main {
+		max-width: 28rem;
+		margin: 2rem auto;
+		padding: 0 1rem;
+	}
+	/* Shared form styles for the sign-up and log-in forms */
+	form {
+		display: grid;
+		gap: 1rem;
+	}
+	label {
+		display: grid;
+		gap: 0.25rem;
+		font-weight: 600;
+	}
+	input {
+		font: inherit;
+		padding: 0.5rem;
+		border-radius: 0.375rem;
+		border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+	}
+	button {
+		font: inherit;
+		padding: 0.5rem 1rem;
+		border-radius: 0.375rem;
+		cursor: pointer;
+	}
+	button:disabled {
+		cursor: progress;
+		opacity: 0.6;
+	}
+	.error {
+		/* light-dark(): first color in light mode, second in dark mode */
+		color: light-dark(#c62828, #ff8a80);
+		margin: 0;
+	}
+	.hint {
+		font-size: 0.875rem;
+		font-weight: 400;
+		opacity: 0.75;
+	}
+</style>

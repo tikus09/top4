@@ -1,0 +1,8 @@
+# Store all text files with LF line endings in the repo,
+# so Windows, macOS and Linux (GitHub Actions) all agree.
+* text=auto eol=lf
+
+# Binary files: never touch them.
+*.ico binary
+*.png binary
+*.jpg binary

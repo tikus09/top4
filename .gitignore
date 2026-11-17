@@ -1,0 +1,32 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# SECRETS: never commit these files.
+# Local secrets for Cloudflare Workers (used from step 3 on)
+.dev.vars
+.dev.vars.*
+# Environment variable files (an ".example" file with fake values is OK)
+.env
+.env.*
+!.env.example
+!.dev.vars.example
+
+# Cloudflare Wrangler local state (local database copy, cache)
+.wrangler/
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/

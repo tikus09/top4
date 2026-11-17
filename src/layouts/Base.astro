@@ -1,12 +1,17 @@
 ---
 // Shared page skeleton: every page wraps its content in <Base title="...">.
 // Whatever the page puts inside <Base> ... </Base> appears where <slot /> is.
+import LogOutButton from '../components/LogOutButton.svelte';
+
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
 const siteName = 'Top 4';
+
+// Filled in by src/middleware.ts: the logged-in user, or null.
+const { user } = Astro.locals;
 ---
 
 <html lang="en">
@@ -22,8 +27,19 @@ const siteName = 'Top 4';
 		<header>
 			<a href="/" class="site-name">{siteName}</a>
 			<nav>
-				<a href="/login">Log in</a>
-				<a href="/signup">Sign up</a>
+				{
+					user ? (
+						<>
+							<a href="/me">{user.name}</a>
+							<LogOutButton client:load />
+						</>
+					) : (
+						<>
+							<a href="/login">Log in</a>
+							<a href="/signup">Sign up</a>
+						</>
+					)
+				}
 			</nav>
 		</header>
 		<main>
@@ -51,6 +67,7 @@ const siteName = 'Top 4';
 	}
 	header nav {
 		display: flex;
+		align-items: center;
 		gap: 1rem;
 	}
 	.site-name {

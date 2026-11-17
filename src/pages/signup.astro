@@ -1,6 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import SignUpForm from '../components/SignUpForm.svelte';
+
+// Already logged in? No need for this page.
+if (Astro.locals.user) {
+	return Astro.redirect('/');
+}
 ---
 
 <Base title="Sign up">

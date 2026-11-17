@@ -1,0 +1,43 @@
+---
+// Protected page: only for logged-in users.
+import Base from '../layouts/Base.astro';
+
+const { user, session } = Astro.locals;
+
+// Not logged in? Send the visitor to the log-in page instead.
+// (This check runs on the server, so the page content is never sent to them.)
+if (!user || !session) {
+	return Astro.redirect('/login');
+}
+
+// Personal data: tell browsers and caches not to store a copy of this page.
+Astro.response.headers.set('Cache-Control', 'private, no-store');
+
+const formatDate = (date: Date) => date.toLocaleDateString('en-GB', { dateStyle: 'long' });
+---
+
+<Base title="Your account">
+	<h1>Your account</h1>
+	<dl>
+		<dt>Display name</dt>
+		<dd>{user.name}</dd>
+
+		<dt>Email</dt>
+		<dd>{user.email}</dd>
+
+		<dt>Member since</dt>
+		<dd>{formatDate(user.createdAt)}</dd>
+
+		<dt>This login expires</dt>
+		<dd>{formatDate(session.expiresAt)} (renews while you keep using the site)</dd>
+	</dl>
+</Base>
+
+<style>
+	dt {
+		font-weight: 600;
+	}
+	dd {
+		margin: 0 0 1rem;
+	}
+</style>

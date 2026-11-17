@@ -1,16 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
-import AccountStatus from '../components/AccountStatus.svelte';
+
+// Filled in by src/middleware.ts: the logged-in user, or null.
+const { user } = Astro.locals;
 ---
 
 <Base title="Top 4">
 	<h1>Hello Top 4</h1>
 	<p>Pick your four favorite LEGO sets. Coming soon.</p>
 
-	{/*
-		client:only="svelte": render this island ONLY in the browser.
-		It asks the server "who is logged in?", which only makes sense in a real
-		visitor's browser (with their cookie), not while building the site.
-	*/}
-	<AccountStatus client:only="svelte" />
+	{
+		user ? (
+			<p>
+				Welcome back, <strong>{user.name}</strong>! See <a href="/me">your account</a>.
+			</p>
+		) : (
+			<p>
+				<a href="/signup">Create an account</a> or <a href="/login">log in</a> to get started.
+			</p>
+		)
+	}
 </Base>

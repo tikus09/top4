@@ -9,6 +9,11 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   integrations: [svelte()],
 
+  // Build every page on the server, per request (instead of once at build time),
+  // so pages can show who is logged in. A page can opt back in to being built
+  // ahead of time with: export const prerender = true;
+  output: 'server',
+
   adapter: cloudflare({
     // Serve images as-is. We don't need Cloudflare Images (an extra service) yet.
     imageService: 'passthrough',

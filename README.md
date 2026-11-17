@@ -15,9 +15,22 @@ We start with LEGO sets (data from [Rebrickable](https://rebrickable.com/downloa
 You need [Node.js](https://nodejs.org) installed.
 
 ```sh
-npm install     # install the libraries listed in package.json
-npm run dev     # start the dev server at http://localhost:4321
+npm install       # install the libraries listed in package.json
+npm run dev       # start the dev server at http://localhost:4321
+npm run build     # build the Worker into dist/
+npm run preview   # run the built site in Cloudflare's local runtime (workerd)
 ```
+
+## Deploy
+
+Live site: https://top4.top4.workers.dev
+
+```sh
+npx wrangler login   # once per computer: lets Wrangler use your Cloudflare account
+npm run deploy       # build, then upload to Cloudflare
+```
+
+Deploys will move to GitHub Actions (automatic after merging to `main`) in a later step.
 
 ## Working rules
 

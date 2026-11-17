@@ -26,12 +26,21 @@ npm run preview   # run the built site in Cloudflare's local runtime (workerd)
 
 Live site: https://top4.top4.workers.dev
 
+**Automatic:** every merge into `main` runs `.github/workflows/deploy.yml`, which type checks,
+builds and deploys. You can also re-run it by hand: GitHub → Actions → Deploy → "Run workflow".
+
+It uses two GitHub Actions secrets (Settings → Secrets and variables → Actions):
+
+- `CLOUDFLARE_API_TOKEN`: custom Cloudflare token with Workers Scripts: Edit, D1: Edit,
+  Account Settings: Read, limited to this account
+- `CLOUDFLARE_ACCOUNT_ID`
+
+**Manual (rarely needed):**
+
 ```sh
 npx wrangler login   # once per computer: lets Wrangler use your Cloudflare account
 npm run deploy       # build, then upload to Cloudflare
 ```
-
-Deploys will move to GitHub Actions (automatic after merging to `main`) in a later step.
 
 ## Working rules
 

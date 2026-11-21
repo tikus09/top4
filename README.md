@@ -46,7 +46,9 @@ npm run db:migrate:local         # create the tables in your local database
 - Svelte components use the browser client in `src/lib/auth-client.ts`, never `auth.ts` (server only).
 - Pages are rendered on the server per request (`output: 'server'` in `astro.config.mjs`).
 - All auth requests go to `/api/auth/*` (for example `POST /api/auth/sign-up/email`).
-- Passwords are stored hashed (scrypt), never in plain text.
+- Passwords are stored hashed, never in plain text: native scrypt from `node:crypto`, with lighter
+  settings that fit the Workers Free CPU limit (see `src/lib/password.ts`). Older hashes are
+  upgraded automatically on the next successful log-in.
 - If you change auth settings or add a Better Auth plugin:
   `npm run auth:generate` (updates `src/db/auth-schema.ts`), then `npm run db:generate`.
 

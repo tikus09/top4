@@ -93,5 +93,8 @@ npm run deploy       # build, then upload to Cloudflare
 
 ## Working rules
 
+The full rules for people and coding agents are in [`AGENTS.md`](AGENTS.md)
+(Claude Code reads them through [`CLAUDE.md`](CLAUDE.md)). In short:
+
 - Never commit to `main`. Every change goes on its own branch and pull request.
 - Never commit secrets. Secret files (`.dev.vars`, `.env*`) are listed in `.gitignore`.
